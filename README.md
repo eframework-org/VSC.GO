@@ -1,9 +1,9 @@
-# ECode Go
+# ECode for Go
 
 [![Version](https://img.shields.io/visual-studio-marketplace/v/eframework-org.vsc-go)](https://marketplace.visualstudio.com/items?itemName=eframework-org.vsc-go)
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/eframework-org.vsc-go)](https://marketplace.visualstudio.com/items?itemName=eframework-org.vsc-go)  
 
-ECode Go 工具优化了 Gopher 们的开发流程，包括快速构建及调试等。
+ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。
 
 ## 功能特性
 

@@ -1,7 +1,7 @@
 {
 	"name": "vsc-go",
-	"displayName": "ECode Go",
-	"description": "ECode Go 工具优化了 Gopher 们的开发流程，包括快速构建及调试等。",
+	"displayName": "ECode for Go",
+	"description": "ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。",
 	"version": "0.0.1",
 	"license": "MIT",
 	"publisher": "eframework-org",
@@ -48,27 +48,27 @@
 			{
 				"command": "vsc-go.buildProject",
 				"title": "Build Project(s)",
-				"category": "ECode Go"
+				"category": "ECode for Go"
 			},
 			{
 				"command": "vsc-go.startProject",
 				"title": "Start Project(s)",
-				"category": "ECode Go"
+				"category": "ECode for Go"
 			},
 			{
 				"command": "vsc-go.stopProject",
 				"title": "Stop Project(s)",
-				"category": "ECode Go"
+				"category": "ECode for Go"
 			},
 			{
 				"command": "vsc-go.debugProject",
 				"title": "Debug Project(s)",
-				"category": "ECode Go"
+				"category": "ECode for Go"
 			},
 			{
 				"command": "vsc-go.showCommand",
 				"title": "Show Command(s)",
-				"category": "ECode Go"
+				"category": "ECode for Go"
 			}
 		],
 		"keybindings": [
@@ -95,7 +95,7 @@
 		],
 		"configuration": {
 			"type": "object",
-			"title": "ECode Go",
+			"title": "ECode for Go",
 			"properties": {
 				"vsc-go.projectList": {
 					"type": "object",
