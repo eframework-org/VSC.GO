@@ -110,12 +110,19 @@ jobs:
             echo "版本号未变更，保持 $VERSION"
           fi
       
-      - name: 发布至注册表
+      - name: 发布至 Visual Studio Marketplace
         env:
           VSCE_PUBLISH: ${{ secrets.VSCE_PUBLISH }}
         run: |
           npm install -g vsce
           vsce publish --pat $VSCE_PUBLISH
+
+      - name: 发布至 Open VSX Registry
+        env:
+          OVSX_PUBLISH: ${{ secrets.OVSX_PUBLISH }}
+        run: |
+          npm install -g ovsx
+          ovsx publish --pat $OVSX_PUBLISH
 
       - name: 提交版本标签
         shell: bash
