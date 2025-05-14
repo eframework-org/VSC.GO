@@ -34,13 +34,13 @@ ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试�
 | arch | ✅ | 指令集架构：arm/arm64/amd64/386 等 |
 | os | ✅ | 运行时平台：windows/linux/darwin 等 |
 | scriptPath | ✅ | 源码路径 |
-| buildPath | ✅ | 构建输出路径 |
-| buildArgs | ➖ | 构建参数，参考：go help build |
-| buildCopy | ➖ | 构建后复制的文件，支持 glob 和路径映射 |
+| buildPath | ✅ | 构建路径 |
+| buildArgs | ➖ | 构建参数，参考 go help build |
+| buildCopy | ➖ | 构建拷贝，支持 glob 和路径映射 |
 | startArgs | ➖ | 启动参数 |
-| startDelay | ➖ | 启动延迟（秒） |
-| stopDelay | ➖ | 停止延迟（秒） |
-| stopPort | ➖ | 端口文件路径 |
+| startDelay | ➖ | 启动延迟 |
+| stopDelay | ➖ | 停止延迟 |
+| stopPort | ➖ | 端口文件 |
 | dlvFlags | ➖ | 调试参数 |
 | extends | ➖ | 拓展配置 |
 
