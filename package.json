@@ -6,10 +6,11 @@
 	"license": "MIT",
 	"publisher": "eframework-org",
 	"author": {
-		"name": "EFramework Organization",
+		"name": "EFramework",
 		"email": "eframework-org@outlook.com",
 		"url": "https://github.com/eframework-org"
 	},
+	"homepage": "https://eframework-org.github.io",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/eframework-org/VSC.GO.git"
@@ -39,58 +40,101 @@
 	"scripts": {
 		"vscode:prepublish": "rm -rf dist && npm install && webpack --mode production",
 		"debug": "tsc",
-		"release": "rm -f *.vsix && vsce package",
-		"publish": "vsce publish",
-		"unpublish": "vsce unpublish eframework-org.vsc-go"
+		"release": "rm -f *.vsix && vsce package"
 	},
 	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "vsc-go",
+					"title": "ECode for Go",
+					"icon": "res/logo.svg"
+				}
+			]
+		},
+		"views": {
+			"vsc-go": [
+				{
+					"id": "vsc-go.projectList",
+					"name": "Projects"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "vsc-go.showCommand",
+					"group": "navigation@1",
+					"when": "view == vsc-go.projectList"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "vsc-go.buildProject",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.startProject",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.stopProject",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.debugProject",
+					"when": "view == vsc-go.projectList"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "vsc-go.projectList",
+				"contents": "No projects was found."
+			}
+		],
 		"commands": [
 			{
 				"command": "vsc-go.buildProject",
 				"title": "Build Project(s)",
-				"category": "ECode for Go"
+				"category": "ECode for Go",
+				"icon": "$(archive)"
 			},
 			{
 				"command": "vsc-go.startProject",
 				"title": "Start Project(s)",
-				"category": "ECode for Go"
+				"category": "ECode for Go",
+				"icon": "$(run)"
 			},
 			{
 				"command": "vsc-go.stopProject",
 				"title": "Stop Project(s)",
-				"category": "ECode for Go"
+				"category": "ECode for Go",
+				"icon": "$(debug-stop)"
 			},
 			{
 				"command": "vsc-go.debugProject",
 				"title": "Debug Project(s)",
-				"category": "ECode for Go"
+				"category": "ECode for Go",
+				"icon": "$(debug-alt)"
+			},
+			{
+				"command": "vsc-go.editProject",
+				"title": "Edit Project(s)",
+				"category": "ECode for Go",
+				"icon": "$(gear)"
+			},
+			{
+				"command": "vsc-go.showOutput",
+				"title": "Show Output(s)",
+				"category": "ECode for Go",
+				"icon": "$(note)"
 			},
 			{
 				"command": "vsc-go.showCommand",
 				"title": "Show Command(s)",
-				"category": "ECode for Go"
-			}
-		],
-		"keybindings": [
-			{
-				"command": "vsc-go.buildProject",
-				"key": "ALT+SHIFT+A"
-			},
-			{
-				"command": "vsc-go.startProject",
-				"key": "ALT+SHIFT+S"
-			},
-			{
-				"command": "vsc-go.stopProject",
-				"key": "ALT+SHIFT+D"
-			},
-			{
-				"command": "vsc-go.debugProject",
-				"key": "ALT+SHIFT+F"
-			},
-			{
-				"command": "vsc-go.showCommand",
-				"key": "ALT+SHIFT+P"
+				"category": "ECode for Go",
+				"icon": "$(more)"
 			}
 		],
 		"configuration": {
@@ -131,7 +175,7 @@
 							}
 						}
 					},
-					"description": "项目列表。"
+					"description": "配置项目参数的列表，支持按名称定义多个项目，并根据平台进行扩展继承。"
 				}
 			}
 		}

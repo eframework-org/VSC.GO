@@ -2,11 +2,11 @@
 
 [![VS Code](https://img.shields.io/badge/visual-studio-marketplace)](https://marketplace.visualstudio.com/items?itemName=eframework-org.vsc-go)
 ![Version](https://img.shields.io/visual-studio-marketplace/v/eframework-org.vsc-go)
-![Installs](https://img.shields.io/visual-studio-marketplace/i/eframework-org.vsc-go)
-
+![Installs](https://img.shields.io/visual-studio-marketplace/i/eframework-org.vsc-go)  
 [![Open VSC](https://img.shields.io/badge/open--vsc-registry-blue)](https://open-vsx.org/extension/eframework-org/vsc-go)
 ![Version](https://img.shields.io/open-vsx/v/eframework-org/vsc-go)
-![Installs](https://img.shields.io/open-vsx/dt/eframework-org/vsc-go)
+![Installs](https://img.shields.io/open-vsx/dt/eframework-org/vsc-go)  
+[![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-org/VSC.GO)
 
 ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。
 
@@ -19,11 +19,13 @@ ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试�
 
 ### 功能清单
 
-- 🔨 Build Project(s)：编译项目 [⌥⇧A]
-- 🚀 Start Project(s)：运行项目 [⌥⇧S]
-- 🛑 Stop Project(s)：停止项目 [⌥⇧D]
-- 🪲 Debug Project(s)：调试项目 [⌥⇧F]
-- 🎮 Show Command(s)：控制面板 [⌥⇧P]
+- 🔨 Build Project(s)：编译项目
+- 🚀 Start Project(s)：运行项目
+- 🛑 Stop Project(s)：停止项目
+- 🪲 Debug Project(s)：调试项目
+- 📝 Edit Project(s)：编辑项目
+- 📄 Show Output(s)：显示输出
+- 🎛️ Show Command(s)：控制面板
 
 ### 配置说明
 

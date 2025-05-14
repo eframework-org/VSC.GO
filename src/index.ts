@@ -15,21 +15,21 @@ import { Start } from "./Start"
 import { Stop } from "./Stop"
 import { Project } from "./Define"
 
-/** 插件支持的命令列表。 */
-const Commands = [
+/** 插件命令列表。 */
+const commands = [
     {
         ID: `${XEnv.Identifier}.buildProject`,
         /** 处理构建项目的命令。 */
-        Handler: async () => {
-            const projects = await Selects("build", "release")
+        Handler: async (context: string | Project) => {
+            const projects = await selects(context, "build", "release")
             await Build.Process(projects, false)
         }
     },
     {
         ID: `${XEnv.Identifier}.startProject`,
         /** 处理启动项目的命令。 */
-        Handler: async () => {
-            const projects = await Selects("start", "release", GoArch(), GoPlat())
+        Handler: async (context: string | Project) => {
+            const projects = await selects(context, "start", "release", goArch(), goPlat())
             await Stop.Process(projects)
             await Start.Process(projects)
         }
@@ -37,20 +37,30 @@ const Commands = [
     {
         ID: `${XEnv.Identifier}.stopProject`,
         /** 处理停止项目的命令。 */
-        Handler: async () => {
-            const projects = await Selects("stop", "debug", GoArch(), GoPlat())
+        Handler: async (context: string | Project) => {
+            const projects = await selects(context, "stop", "debug", goArch(), goPlat())
             await Stop.Process(projects)
         }
     },
     {
         ID: `${XEnv.Identifier}.debugProject`,
         /** 处理调试项目的命令。 */
-        Handler: async () => {
-            const projects = await Selects("debug", "debug", GoArch(), GoPlat())
+        Handler: async (context: string | Project) => {
+            const projects = await selects(context, "debug", "debug", goArch(), goPlat())
             await Stop.Process(projects)
             await Build.Process(projects, true)
             await Debug.Process(projects)
         }
+    },
+    {
+        ID: `${XEnv.Identifier}.editProject`,
+        /** 处理编辑项目的命令。 */
+        Handler: async () => vscode.commands.executeCommand("workbench.action.openSettings", `@id:${XEnv.Identifier}.projectList`)
+    },
+    {
+        ID: `${XEnv.Identifier}.showOutput`,
+        /** 处理显示输出的命令。 */
+        Handler: async () => vscode.commands.executeCommand("workbench.action.output.toggleOutput")
     },
     {
         ID: `${XEnv.Identifier}.showCommand`,
@@ -72,25 +82,41 @@ const Commands = [
     }
 ]
 
-/** 已加载的项目配置列表。 */
+/** 项目配置列表。 */
 const projects = new Array<Project>()
 
-/** 项目选择器实例。 */
+/** 树形视图实例。 */
+var tree: vscode.TreeView<any>
+
+/** 选择视图实例。 */
 var selector: vscode.QuickPick<vscode.QuickPickItem>
 
 /**
  * 选择项目配置。
  * @param action 当前操作名称。
- * @param matchs 匹配条件数组。
- * @returns 返回选中的项目配置数组。
+ * @param matchs 匹配条件列表。
+ * @returns 返回选中的项目配置列表。
  */
-async function Selects(action: string, ...matchs: string[]): Promise<Project[]> {
+async function selects(context: string | Project, action: string, ...matchs: string[]): Promise<Project[]> {
     return new Promise<Project[]>((resolve, reject) => {
         try {
             const proj = vscode.workspace.rootPath
             const file = XFile.PathJoin(XEnv.LocalPath, "Selected.prefs")
-            const labels = new Array<string>()
-            projects.forEach(v => labels.push(v.ID))
+            let bytree = false
+            let labels = new Array<string>()
+            if (context || (tree && tree.selection && tree.selection.length > 0)) {
+                bytree = true
+                let tmps = new Array<any>()
+                if (context) tmps.push(context)
+                if (tree && tree.selection && tree.selection.length > 0) tmps = tmps.concat(tree.selection)
+                tmps.forEach(k => {
+                    if (typeof (k) == "string") projects.forEach(v => { if (v.Name == k) labels.push(v.ID) })
+                    else if (k instanceof Project) labels.push(k.ID)
+                })
+                labels = Array.from(new Set(labels))
+            } else {
+                projects.forEach(v => labels.push(v.ID))
+            }
 
             /**
              * 获取本地已选择的项目配置。
@@ -185,12 +211,10 @@ async function Selects(action: string, ...matchs: string[]): Promise<Project[]> 
                     const selected = new Array<Project>()
                     for (let i = 0; i < selector.selectedItems.length; i++) {
                         const label = selector.selectedItems[i].label
-                        for (let j = 0; j < projects.length; j++) {
-                            const project = projects[j]
-                            if (project.ID == label) {
-                                selected.push(project)
-                                break
-                            }
+                        const proj = projects.find(v => v.ID == label)
+                        if (proj) {
+                            selected.push(proj)
+                            break
                         }
                     }
                     saveLocal(selector.selectedItems)
@@ -200,20 +224,30 @@ async function Selects(action: string, ...matchs: string[]): Promise<Project[]> 
                 }
             }
 
-            if (selector) {
-                onDidAccept()
+            if (bytree) {
+                const filter = filterProjects()
+                const selected = new Array<Project>()
+                for (let i = 0; i < filter.length; i++) {
+                    const proj = projects.find(v => v.ID == filter[i])
+                    if (proj) selected.push(proj)
+                }
+                resolve(selected)
             } else {
-                selector = vscode.window.createQuickPick()
-                selector.canSelectMany = true
-                selector.placeholder = XString.Format("Select project(s) to {0}.", action)
-                selector.items = filterProjects().map(label => ({ label }))
-                selector.selectedItems = getLocalSelected(selector.items)
-                selector.onDidAccept(onDidAccept)
-                selector.onDidHide(() => {
-                    selector.dispose()
-                    selector = null
-                })
-                selector.show()
+                if (selector) {
+                    onDidAccept()
+                } else {
+                    selector = vscode.window.createQuickPick()
+                    selector.canSelectMany = true
+                    selector.placeholder = XString.Format("Select project(s) to {0}.", action)
+                    selector.items = filterProjects().map(label => ({ label }))
+                    selector.selectedItems = getLocalSelected(selector.items)
+                    selector.onDidAccept(onDidAccept)
+                    selector.onDidHide(() => {
+                        selector.dispose()
+                        selector = null
+                    })
+                    selector.show()
+                }
             }
         } catch (err) { reject(err) }
     })
@@ -223,8 +257,8 @@ async function Selects(action: string, ...matchs: string[]): Promise<Project[]> 
  * 获取当前 Go 环境的项目架构。
  * @returns 返回项目架构字符串。
  */
-function GoArch(): string {
-    // nodejs-arch:'arm'、'arm64'、'ia32'、'mips'、'mipsel'、'ppc'、'ppc64'、's390'、's390x'、'x64'
+function goArch(): string {
+    // nodejs-arch: 'arm'、'arm64'、'ia32'、'mips'、'mipsel'、'ppc'、'ppc64'、's390'、's390x'、'x64'
     let arch = process.arch as string
     if (process.arch == "x64") { arch = "amd64" }
     else if (process.arch == "ia32") { arch = "386" }
@@ -235,7 +269,7 @@ function GoArch(): string {
  * 获取当前 Go 环境的项目平台。
  * @returns 返回项目平台字符串。
  */
-function GoPlat(): string { return process.platform == "win32" ? "windows" : process.platform }
+function goPlat(): string { return process.platform == "win32" ? "windows" : process.platform }
 
 /**
  * 插件激活入口函数。
@@ -243,7 +277,7 @@ function GoPlat(): string { return process.platform == "win32" ? "windows" : pro
  */
 export function activate(context: vscode.ExtensionContext) {
     /**
-     * 解析并加载配置。
+     * 解析配置。
      */
     function parseConfig() {
         projects.length = 0
@@ -267,27 +301,53 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    // 初始化配置
+    // 解析配置
     parseConfig()
 
-    // 监听配置变化
+    // 监听配置
     vscode.workspace.onDidChangeConfiguration(() => parseConfig())
 
     // 注册命令
-    for (let i = 0; i < Commands.length; i++) {
-        const meta = Commands[i]
+    for (let i = 0; i < commands.length; i++) {
+        const meta = commands[i]
         vscode.commands.registerCommand(meta.ID, meta.Handler)
     }
 
-    // 创建状态栏项
-    const bar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right)
-    context.subscriptions.push(bar)
-    bar.tooltip = XEnv.Description
-    if (Commands.length > 0) bar.command = Commands[Commands.length - 1].ID
-    bar.text = XEnv.Product
-    bar.show()
+    // 注册视图
+    tree = vscode.window.createTreeView("vsc-go.projectList", {
+        treeDataProvider: {
+            getChildren(element: string | Project): vscode.ProviderResult<any[]> {
+                const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration(XEnv.Identifier)
+                const list: any = config.get("projectList")
+                if (list) {
+                    if (!element) return Array.from(new Set(projects.map(e => e.Name)))
+                    else if (typeof (element) == "string") return projects.filter(e => e.Name == element)
+                    else if (element instanceof Project) return Object.keys(element)
+                }
+            },
+            getTreeItem(element: string | Project): vscode.TreeItem {
+                if (typeof (element) == "string") {
+                    return {
+                        id: element,
+                        label: element,
+                        iconPath: new vscode.ThemeIcon("folder"),
+                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed
+                    }
+                } else if (element instanceof Project) {
+                    return {
+                        id: element.ID,
+                        label: element.ID.replace(element.Name + ".", ""),
+                        iconPath: new vscode.ThemeIcon("folder-opened"),
+                        tooltip: JSON.stringify(element, null, "\t")
+                    }
+                }
+            }
+        },
+        canSelectMany: true
+    })
+    context.subscriptions.push(tree)
 
-    XLog.Notice("Extension has been activated.")
+    XLog.Notice("extension has been activated.")
 }
 
 /**
@@ -295,5 +355,5 @@ export function activate(context: vscode.ExtensionContext) {
  */
 export function deactivate() {
     if (selector) selector.dispose()
-    XLog.Notice("Extension has been deactivated.")
+    XLog.Notice("extension has been deactivated.")
 }
