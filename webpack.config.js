@@ -3,7 +3,7 @@ const path = require("path");
 const config = {
 	target: "node",
 	entry: {
-		index: "./src/index.ts"
+		index: "./src/extension.ts"
 	},
 	output: {
 		path: path.resolve(__dirname, "dist"),

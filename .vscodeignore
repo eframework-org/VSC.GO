@@ -8,4 +8,4 @@ tsconfig.json
 package-lock.json
 local/**
 webpack.config.js
-dist/index.js.map
+dist/extension.js.map

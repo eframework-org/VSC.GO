@@ -36,7 +36,7 @@
 		"onLanguage:go",
 		"onDebugResolve:go"
 	],
-	"main": "./dist/index.js",
+	"main": "./dist/extension.js",
 	"scripts": {
 		"vscode:prepublish": "rm -rf dist && npm install && webpack --mode production",
 		"debug": "tsc",
