@@ -63,8 +63,18 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "vsc-go.showCommand",
+					"command": "vsc-go.editProject",
 					"group": "navigation@1",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.showOutput",
+					"group": "navigation@2",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.showCommand",
+					"group": "navigation@3",
 					"when": "view == vsc-go.projectList"
 				}
 			],
@@ -128,7 +138,7 @@
 				"command": "vsc-go.showOutput",
 				"title": "Show Output(s)",
 				"category": "ECode for Go",
-				"icon": "$(note)"
+				"icon": "$(symbol-constant)"
 			},
 			{
 				"command": "vsc-go.showCommand",
