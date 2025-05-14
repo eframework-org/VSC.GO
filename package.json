@@ -2,7 +2,7 @@
 	"name": "vsc-go",
 	"displayName": "ECode for Go",
 	"description": "ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"publisher": "eframework-org",
 	"author": {
