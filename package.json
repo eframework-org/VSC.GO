@@ -94,6 +94,16 @@
 				{
 					"command": "vsc-go.debugProject",
 					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.stopProject",
+					"group": "inline@1",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.debugProject",
+					"group": "inline@2",
+					"when": "view == vsc-go.projectList"
 				}
 			]
 		},
@@ -144,7 +154,7 @@
 				"command": "vsc-go.showCommand",
 				"title": "Show Command(s)",
 				"category": "ECode for Go",
-				"icon": "$(more)"
+				"icon": "$(gripper)"
 			}
 		],
 		"configuration": {
