@@ -85,6 +85,9 @@ const commands = [
 /** 项目配置列表。 */
 const projects = new Array<Project>()
 
+/** 项目调试会话。 */
+const sessions: Map<string, vscode.DebugSession> = new Map()
+
 /** 树形视图实例。 */
 var tree: vscode.TreeView<any>
 
@@ -319,6 +322,16 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand(meta.ID, meta.Handler)
     }
 
+    // 监听调试
+    vscode.debug.onDidStartDebugSession((session) => {
+        if (session) sessions.set(session.name, session)
+        treeEvent.fire()
+    })
+    vscode.debug.onDidTerminateDebugSession((session) => {
+        if (session) sessions.delete(session.name)
+        treeEvent.fire()
+    })
+
     // 注册视图
     tree = vscode.window.createTreeView("vsc-go.projectList", {
         treeDataProvider: {
@@ -333,18 +346,35 @@ export function activate(context: vscode.ExtensionContext) {
             },
             getTreeItem(element: string | Project): vscode.TreeItem {
                 if (typeof (element) == "string") {
+                    let context = "notdebugging"
+                    for (const [key] of sessions) {
+                        const proj = projects.find(v => v.ID == key)
+                        if (proj && proj.Name == element) {
+                            context = "debugging"
+                            break
+                        }
+                    }
                     return {
                         id: element,
                         label: element,
                         iconPath: new vscode.ThemeIcon("folder"),
-                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed
+                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
+                        contextValue: context
                     }
                 } else if (element instanceof Project) {
+                    let context = "notdebugging"
+                    for (const [key] of sessions) {
+                        if (key == element.ID) {
+                            context = "debugging"
+                            break
+                        }
+                    }
                     return {
                         id: element.ID,
                         label: element.ID.replace(element.Name + ".", ""),
                         iconPath: new vscode.ThemeIcon("folder-opened"),
-                        tooltip: JSON.stringify(element, null, "\t")
+                        tooltip: JSON.stringify(element, null, "\t"),
+                        contextValue: context
                     }
                 }
             },

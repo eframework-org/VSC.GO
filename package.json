@@ -97,13 +97,13 @@
 				},
 				{
 					"command": "vsc-go.stopProject",
-					"group": "inline@1",
-					"when": "view == vsc-go.projectList"
+					"group": "inline",
+					"when": "view == vsc-go.projectList && viewItem == debugging"
 				},
 				{
 					"command": "vsc-go.debugProject",
-					"group": "inline@2",
-					"when": "view == vsc-go.projectList"
+					"group": "inline",
+					"when": "view == vsc-go.projectList && viewItem == notdebugging"
 				}
 			]
 		},
