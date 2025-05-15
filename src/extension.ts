@@ -27,11 +27,22 @@ XLog.Print = (fmt: any, level: XLog.LevelType, ...args: Array<any>) => {
 /** 插件命令列表。 */
 const commands = [
     {
-        ID: `${XEnv.Identifier}.buildProject`,
-        /** 处理构建项目的命令。 */
+        ID: `${XEnv.Identifier}.debugProject`,
+        /** 处理调试项目的命令。 */
         Handler: async (context: string | Project) => {
-            const projects = await selects(context, "build", "release")
-            await Build.Process(projects, false)
+            const projects = await selects(context, "debug", "debug", goArch(), goPlat())
+            await Stop.Process(projects)
+            if (await Build.Process(projects, true)) {
+                await Debug.Process(projects)
+            }
+        }
+    },
+    {
+        ID: `${XEnv.Identifier}.stopProject`,
+        /** 处理停止项目的命令。 */
+        Handler: async (context: string | Project) => {
+            const projects = await selects(context, "stop", "debug", goArch(), goPlat())
+            await Stop.Process(projects)
         }
     },
     {
@@ -44,22 +55,11 @@ const commands = [
         }
     },
     {
-        ID: `${XEnv.Identifier}.stopProject`,
-        /** 处理停止项目的命令。 */
+        ID: `${XEnv.Identifier}.buildProject`,
+        /** 处理构建项目的命令。 */
         Handler: async (context: string | Project) => {
-            const projects = await selects(context, "stop", "debug", goArch(), goPlat())
-            await Stop.Process(projects)
-        }
-    },
-    {
-        ID: `${XEnv.Identifier}.debugProject`,
-        /** 处理调试项目的命令。 */
-        Handler: async (context: string | Project) => {
-            const projects = await selects(context, "debug", "debug", goArch(), goPlat())
-            await Stop.Process(projects)
-            if (await Build.Process(projects, true)) {
-                await Debug.Process(projects)
-            }
+            const projects = await selects(context, "build", "release")
+            await Build.Process(projects, false)
         }
     },
     {

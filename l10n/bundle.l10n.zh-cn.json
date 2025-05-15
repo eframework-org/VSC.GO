@@ -1,19 +1,19 @@
 {
     "No project was selected.": "未选择项目。",
-    "Select project(s) to build.": "选择要构建的项目。",
-    "Building project(s)": "构建项目",
-    "Building project(s) has been canceled.": "构建项目已取消。",
-    "Build {0} project(s) succeed, failed({1}): {2}.": "构建项目（{0}个）成功, 失败（{1}个）: {2}。",
     "Select project(s) to debug.": "选择要调试的项目。",
     "Debugging project(s)": "调试项目",
     "Debugging project(s) has been canceled.": "调试项目已取消。",
     "Debug {0} project(s) done.": "调试项目（{0}个）完成。",
+    "Stopping project(s)": "停止项目",
+    "Stopping project(s) has been canceled.": "停止项目已取消。",
+    "Stop {0} project(s) done.": "停止项目（{0}个）完成。",
     "Select project(s) to start.": "选择要启动的项目。",
     "Starting project(s)": "启动项目",
     "Starting project(s) has been canceled.": "启动项目已取消。",
     "Start {0} project(s) done.": "运行项目（{0}个）完成。",
     "Select project(s) to stop.": "选择要停止的项目。",
-    "Stopping project(s)": "停止项目",
-    "Stopping project(s) has been canceled.": "停止项目已取消。",
-    "Stop {0} project(s) done.": "停止项目（{0}个）完成。"
+    "Select project(s) to build.": "选择要构建的项目。",
+    "Building project(s)": "构建项目",
+    "Building project(s) has been canceled.": "构建项目已取消。",
+    "Build {0} project(s) succeed, failed({1}): {2}.": "构建项目（{0}个）成功, 失败（{1}个）: {2}。"
 }

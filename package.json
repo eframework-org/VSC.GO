@@ -81,30 +81,34 @@
 			],
 			"view/item/context": [
 				{
-					"command": "vsc-go.buildProject",
+					"command": "vsc-go.debugProject",
+					"group": "order@1",
+					"when": "view == vsc-go.projectList"
+				},
+				{
+					"command": "vsc-go.stopProject",
+					"group": "order@2",
 					"when": "view == vsc-go.projectList"
 				},
 				{
 					"command": "vsc-go.startProject",
+					"group": "order@3",
 					"when": "view == vsc-go.projectList"
 				},
 				{
-					"command": "vsc-go.stopProject",
+					"command": "vsc-go.buildProject",
+					"group": "order@4",
 					"when": "view == vsc-go.projectList"
-				},
-				{
-					"command": "vsc-go.debugProject",
-					"when": "view == vsc-go.projectList"
-				},
-				{
-					"command": "vsc-go.stopProject",
-					"group": "inline",
-					"when": "view == vsc-go.projectList && viewItem == debugging"
 				},
 				{
 					"command": "vsc-go.debugProject",
 					"group": "inline",
 					"when": "view == vsc-go.projectList && viewItem == notdebugging"
+				},
+				{
+					"command": "vsc-go.stopProject",
+					"group": "inline",
+					"when": "view == vsc-go.projectList && viewItem == debugging"
 				}
 			]
 		},
@@ -116,16 +120,10 @@
 		],
 		"commands": [
 			{
-				"command": "vsc-go.buildProject",
-				"title": "%command.buildProject%",
+				"command": "vsc-go.debugProject",
+				"title": "%command.debugProject%",
 				"category": "ECode for Go",
-				"icon": "$(archive)"
-			},
-			{
-				"command": "vsc-go.startProject",
-				"title": "%command.startProject%",
-				"category": "ECode for Go",
-				"icon": "$(run)"
+				"icon": "$(debug-alt)"
 			},
 			{
 				"command": "vsc-go.stopProject",
@@ -134,10 +132,16 @@
 				"icon": "$(debug-stop)"
 			},
 			{
-				"command": "vsc-go.debugProject",
-				"title": "%command.debugProject%",
+				"command": "vsc-go.startProject",
+				"title": "%command.startProject%",
 				"category": "ECode for Go",
-				"icon": "$(debug-alt)"
+				"icon": "$(run)"
+			},
+			{
+				"command": "vsc-go.buildProject",
+				"title": "%command.buildProject%",
+				"category": "ECode for Go",
+				"icon": "$(archive)"
 			},
 			{
 				"command": "vsc-go.editProject",

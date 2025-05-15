@@ -19,10 +19,10 @@ ECode for Go 优化了 Gopher 们的开发体验，提供快速构建与调试�
 
 ### 功能清单
 
-- 🔨 Build Project(s)：构建项目
-- 🚀 Start Project(s)：启动项目
-- 🛑 Stop Project(s)：停止项目
 - 🪲 Debug Project(s)：调试项目
+- 🛑 Stop Project(s)：停止项目
+- 🚀 Start Project(s)：启动项目
+- 🔨 Build Project(s)：构建项目
 - 📝 Edit Project(s)：编辑项目
 - 📄 Show Output(s)：显示输出
 - 🎛️ Show Command(s)：显示命令
