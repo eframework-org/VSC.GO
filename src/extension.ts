@@ -379,7 +379,8 @@ export function activate(context: vscode.ExtensionContext) {
             },
             onDidChangeTreeData: treeEvent.event
         },
-        canSelectMany: true
+        canSelectMany: true,
+        showCollapseAll: true
     })
     context.subscriptions.push(tree)
 
