@@ -14,6 +14,16 @@ import { Start } from "./Start"
 import { Stop } from "./Stop"
 import { Project } from "./Project"
 
+/** 日志输出通道 */
+const output = vscode.window.createOutputChannel(XEnv.Product, { log: true })
+XLog.Print = (fmt: any, level: XLog.LevelType, ...args: Array<any>) => {
+    const str = `${typeof fmt == "string" ? XString.Format(fmt, args) : fmt}`
+    if (level >= XLog.LevelType.Debug) output.debug(str)
+    else if (level >= XLog.LevelType.Notice) output.info(str)
+    else if (level >= XLog.LevelType.Warn) output.warn(str)
+    else output.error(str)
+}
+
 /** 插件命令列表。 */
 const commands = [
     {
@@ -59,7 +69,7 @@ const commands = [
     {
         ID: `${XEnv.Identifier}.showOutput`,
         /** 处理显示输出的命令。 */
-        Handler: async () => vscode.commands.executeCommand("workbench.action.output.toggleOutput")
+        Handler: async () => output.show(true)
     },
     {
         ID: `${XEnv.Identifier}.showCommand`,
