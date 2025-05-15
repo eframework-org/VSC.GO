@@ -167,8 +167,8 @@
 					"default": {
 						"$name": {
 							"base": {
-								"arch": "[arm/arm64/amd64/386/etc.]",
 								"os": "[windows/linux/darwin/etc.]",
+								"arch": "[arm/arm64/amd64/386/etc.]",
 								"scriptPath": "$(path/to/script)",
 								"buildPath": "$(path/to/build)",
 								"buildArgs": [],

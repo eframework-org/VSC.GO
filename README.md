@@ -19,20 +19,20 @@ ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试�
 
 ### 功能清单
 
-- 🔨 Build Project(s)：编译项目
-- 🚀 Start Project(s)：运行项目
+- 🔨 Build Project(s)：构建项目
+- 🚀 Start Project(s)：启动项目
 - 🛑 Stop Project(s)：停止项目
 - 🪲 Debug Project(s)：调试项目
 - 📝 Edit Project(s)：编辑项目
 - 📄 Show Output(s)：显示输出
-- 🎛️ Show Command(s)：控制面板
+- 🎛️ Show Command(s)：显示命令
 
 ### 配置说明
 
 | 字段 | 必要 | 说明 |
 | --- | :---: | --- |
-| arch | ✅ | 指令集架构：arm/arm64/amd64/386 等 |
-| os | ✅ | 运行时平台：windows/linux/darwin 等 |
+| os | ✅ | 运行时平台，参考 GOOS |
+| arch | ✅ | 指令集架构，参考 GOARCH |
 | scriptPath | ✅ | 源码路径 |
 | buildPath | ✅ | 构建路径 |
 | buildArgs | ➖ | 构建参数，参考 go help build |
@@ -51,8 +51,8 @@ ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试�
     "vsc-go.projectList": {
         "Greet": {
             "base": {
-                "arch": "amd64",
                 "os": "windows",
+                "arch": "amd64",
                 "scriptPath": "src/main",
                 "buildPath": "bin",
                 "buildCopy": [
