@@ -9,9 +9,8 @@ import { XFile, XLog, XString } from "org.eframework.uni.util"
 import { Project } from "./Project"
 
 /**
- * Stop 命名空间处理所有终止相关的操作。
+ * Stop 模块处理所有终止相关的操作。
  * 提供项目的停止、端口释放等功能。
- * @namespace
  */
 export namespace Stop {
     /** 用于跟踪活动调试会话的映射。 */
@@ -24,12 +23,12 @@ export namespace Stop {
      */
     export async function Process(projects: Project[]) {
         if (projects == null || projects.length == 0) {
-            XLog.Warn("Stop.Process: no project(s) was selected.")
-            vscode.window.showInformationMessage("No project(s) was selected.")
+            XLog.Warn("Stop.Process: no project was selected.")
+            vscode.window.showInformationMessage(vscode.l10n.t("No project was selected."))
         } else {
             return vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Stopping project(s)",
+                title: vscode.l10n.t("Stopping project(s)"),
                 cancellable: true
             }, (progress, token) => {
                 return new Promise<void>((resolve, reject) => {
@@ -37,7 +36,7 @@ export namespace Stop {
                     token.onCancellationRequested(() => {
                         canceled = true
                         XLog.Info("Stopping project(s) has been canceled.")
-                        reject("Stopping project(s) has been canceled.")
+                        reject(vscode.l10n.t("Stopping project(s) has been canceled."))
                     })
 
                     // 初始化调试会话管理
@@ -117,7 +116,7 @@ export namespace Stop {
                                                         XLog.Info("Stop.Process({0}): start kill proc by port at {1}", project.ID, port)
                                                         killport(port, "tcp").then(() => {
                                                             XLog.Info("Stop.Process({0}): finish kill proc by port at {1}", project.ID, port)
-                                                        }, e => {
+                                                        }, (e: any) => {
                                                             XLog.Info("Stop.Process({0}): kill proc by port at {1} failed: {2}", project.ID, port, e)
                                                         })
                                                     } catch (err) {
@@ -137,7 +136,7 @@ export namespace Stop {
                             } finally {
                                 progress.report({ increment: incre, message: XString.Format("{0} ({1} of {2})", project.ID, index + 1, projects.length) })
                                 if (index == projects.length - 1 || canceled) {
-                                    vscode.window.showInformationMessage(XString.Format("Stop {0} project(s) done.", projects.length))
+                                    vscode.window.showInformationMessage(XString.Format(vscode.l10n.t("Stop {0} project(s) done."), projects.length))
                                     setTimeout(resolve, 800) // 等待进度条显示完成
                                 }
                             }

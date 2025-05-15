@@ -10,9 +10,8 @@ import { Project } from "./Project"
 import { XFile } from "org.eframework.uni.util"
 
 /**
- * Start 命名空间处理所有启动相关的操作。
+ * Start 模块处理所有启动相关的操作。
  * 提供项目的启动、参数配置等功能。
- * @namespace
  */
 export namespace Start {
     /**
@@ -22,12 +21,12 @@ export namespace Start {
      */
     export async function Process(projects: Project[]) {
         if (projects == null || projects.length == 0) {
-            XLog.Warn("Start.Process: no project(s) was selected.")
-            vscode.window.showInformationMessage("No project(s) was selected.")
+            XLog.Warn("Start.Process: no project was selected.")
+            vscode.window.showInformationMessage(vscode.l10n.t("No project was selected."))
         } else {
             return vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Starting project(s)",
+                title: vscode.l10n.t("Starting project(s)"),
                 cancellable: true
             }, (progress, token) => {
                 return new Promise<void>((resolve, reject) => {
@@ -35,7 +34,7 @@ export namespace Start {
                     token.onCancellationRequested(() => {
                         canceled = true
                         XLog.Info("Starting project(s) has been canceled.")
-                        reject("Starting project(s) has been canceled.")
+                        reject(vscode.l10n.t("Starting project(s) has been canceled."))
                     })
 
                     let totalTime = 0        // 累计延迟时间
@@ -103,7 +102,7 @@ export namespace Start {
                             } finally {
                                 progress.report({ increment: incre, message: XString.Format("{0} ({1} of {2})", project.ID, index + 1, projects.length) })
                                 if (index == projects.length - 1 || canceled) {
-                                    vscode.window.showInformationMessage(XString.Format("Start {0} project(s) done.", projects.length))
+                                    vscode.window.showInformationMessage(XString.Format(vscode.l10n.t("Start {0} project(s) done."), projects.length))
                                     setTimeout(resolve, 800) // 等待进度条显示完成
                                 }
                             }

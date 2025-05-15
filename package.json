@@ -1,7 +1,7 @@
 {
 	"name": "vsc-go",
 	"displayName": "ECode for Go",
-	"description": "ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。",
+	"description": "%extension.description%",
 	"version": "0.0.2",
 	"license": "MIT",
 	"publisher": "eframework-org",
@@ -37,6 +37,7 @@
 		"onDebugResolve:go"
 	],
 	"main": "./dist/extension.js",
+	"l10n": "./l10n",
 	"scripts": {
 		"vscode:prepublish": "rm -rf dist && npm install && webpack --mode production",
 		"debug": "tsc",
@@ -56,7 +57,7 @@
 			"vsc-go": [
 				{
 					"id": "vsc-go.projectList",
-					"name": "Projects"
+					"name": "%view.projects%"
 				}
 			]
 		},
@@ -110,49 +111,49 @@
 		"viewsWelcome": [
 			{
 				"view": "vsc-go.projectList",
-				"contents": "No projects was found."
+				"contents": "%viewsWelcome.noProject%"
 			}
 		],
 		"commands": [
 			{
 				"command": "vsc-go.buildProject",
-				"title": "Build Project(s)",
+				"title": "%command.buildProject%",
 				"category": "ECode for Go",
 				"icon": "$(archive)"
 			},
 			{
 				"command": "vsc-go.startProject",
-				"title": "Start Project(s)",
+				"title": "%command.startProject%",
 				"category": "ECode for Go",
 				"icon": "$(run)"
 			},
 			{
 				"command": "vsc-go.stopProject",
-				"title": "Stop Project(s)",
+				"title": "%command.stopProject%",
 				"category": "ECode for Go",
 				"icon": "$(debug-stop)"
 			},
 			{
 				"command": "vsc-go.debugProject",
-				"title": "Debug Project(s)",
+				"title": "%command.debugProject%",
 				"category": "ECode for Go",
 				"icon": "$(debug-alt)"
 			},
 			{
 				"command": "vsc-go.editProject",
-				"title": "Edit Project(s)",
+				"title": "%command.editProject%",
 				"category": "ECode for Go",
 				"icon": "$(gear)"
 			},
 			{
 				"command": "vsc-go.showOutput",
-				"title": "Show Output(s)",
+				"title": "%command.showOutput%",
 				"category": "ECode for Go",
 				"icon": "$(symbol-constant)"
 			},
 			{
 				"command": "vsc-go.showCommand",
-				"title": "Show Command(s)",
+				"title": "%command.showCommand%",
 				"category": "ECode for Go",
 				"icon": "$(gripper)"
 			}
@@ -195,7 +196,7 @@
 							}
 						}
 					},
-					"description": "配置项目参数的列表，支持按名称定义多个项目，并根据平台进行扩展继承。"
+					"description": "%configuration.projectList.description%"
 				}
 			}
 		}

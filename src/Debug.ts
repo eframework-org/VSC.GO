@@ -9,9 +9,8 @@ import { XFile, XLog, XString } from "org.eframework.uni.util"
 import { Project } from "./Project"
 
 /**
- * Debug 命名空间处理所有调试相关的操作。
+ * Debug 模块处理所有调试相关的操作。
  * 提供项目的调试、断点管理等功能。
- * @namespace
  */
 export namespace Debug {
     /**
@@ -21,12 +20,12 @@ export namespace Debug {
      */
     export function Process(projects: Project[]) {
         if (projects == null || projects.length == 0) {
-            XLog.Warn("Debug.Process: no project(s) was selected.")
-            vscode.window.showInformationMessage("No project(s) was selected.")
+            XLog.Warn("Debug.Process: no project was selected.")
+            vscode.window.showInformationMessage(vscode.l10n.t("No project was selected."))
         } else {
             return vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Debugging project(s)",
+                title: vscode.l10n.t("Debugging project(s)"),
                 cancellable: true
             }, (progress, token) => {
                 return new Promise<void>((resolve, reject) => {
@@ -34,7 +33,7 @@ export namespace Debug {
                     token.onCancellationRequested(() => {
                         canceled = true
                         XLog.Info("Debugging project(s) has been canceled.")
-                        reject("Debugging project(s) has been canceled.")
+                        reject(vscode.l10n.t("Debugging project(s) has been canceled."))
                     })
 
                     const env = "debug"     // 调试环境标识
@@ -90,13 +89,13 @@ export namespace Debug {
                                 }).then(() => {
                                     if (idx < projects.length - 1) processNext(idx + 1)
                                     else {
-                                        vscode.window.showInformationMessage(XString.Format("Debug {0} project(s) done.", projects.length))
+                                        vscode.window.showInformationMessage(XString.Format(vscode.l10n.t("Debug {0} project(s) done."), projects.length))
                                         setTimeout(resolve, 800) // 等待进度条显示完成
                                     }
                                 }, () => {
                                     if (idx < projects.length - 1) processNext(idx + 1)
                                     else {
-                                        vscode.window.showInformationMessage(XString.Format("Debug {0} project(s) done.", projects.length))
+                                        vscode.window.showInformationMessage(XString.Format(vscode.l10n.t("Debug {0} project(s) done."), projects.length))
                                         setTimeout(resolve, 800) // 等待进度条显示完成
                                     }
                                 })

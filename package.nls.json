@@ -1,0 +1,13 @@
+{
+    "extension.description": "ECode for Go optimizes the development workflow for Gophers, including fast build and debugging features.",
+    "view.projects": "Projects",
+    "viewsWelcome.noProject": "No project was found.",
+    "command.buildProject": "Build Project(s)",
+    "command.startProject": "Start Project(s)",
+    "command.stopProject": "Stop Project(s)",
+    "command.debugProject": "Debug Project(s)",
+    "command.editProject": "Edit Project(s)",
+    "command.showOutput": "Show Output(s)",
+    "command.showCommand": "Show Command(s)",
+    "configuration.projectList.description": "Configure project parameters list, supporting multiple projects by name and platform-based extension inheritance."
+}

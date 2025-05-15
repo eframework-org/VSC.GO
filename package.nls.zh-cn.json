@@ -1,0 +1,13 @@
+{
+    "extension.description": "ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。",
+    "view.projects": "项目列表",
+    "viewsWelcome.noProject": "未找到项目。",
+    "command.buildProject": "构建项目",
+    "command.startProject": "启动项目",
+    "command.stopProject": "停止项目",
+    "command.debugProject": "调试项目",
+    "command.editProject": "编辑项目",
+    "command.showOutput": "显示输出",
+    "command.showCommand": "显示命令",
+    "configuration.projectList.description": "配置项目参数的列表，支持按名称定义多个项目，并根据平台进行扩展继承。"
+}

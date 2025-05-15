@@ -3,8 +3,7 @@
 // license that can be found in the LICENSE file.
 
 /**
- * 插件入口模块，负责初始化、命令注册和生命周期管理。
- * @module index
+ * 插件入口模块，负责初始化、命令注册、视图渲染和流程控制。
  */
 
 import * as vscode from "vscode"
@@ -68,11 +67,12 @@ const commands = [
         Handler: async () => {
             try {
                 const pkg = vscode.extensions.getExtension(`${XEnv.Author}.${XEnv.Identifier}`).packageJSON
-                let cmds: Array<{ title: string, command: string }> = pkg.contributes ? pkg.contributes.commands : null
+                let cmds: Array<{ title: any, command: string }> = pkg.contributes ? pkg.contributes.commands : null
                 if (cmds && cmds.length > 1) {
                     cmds = cmds.slice(0, cmds.length - 1)
-                    const ret = await vscode.window.showQuickPick(cmds.map((e) => e.title))
-                    const cmd = cmds.find(e => e.title == ret)
+                    // e.title.value 兼容多语言环境
+                    const ret = await vscode.window.showQuickPick(cmds.map((e) => e.title.value ? e.title.value : e.title))
+                    const cmd = cmds.find(e => e.title == ret || e.title.value == ret)
                     if (cmd) vscode.commands.executeCommand(cmd.command)
                 }
             } catch (err) {
@@ -244,7 +244,7 @@ async function selects(context: string | Project, action: string, ...matchs: str
                 } else {
                     selector = vscode.window.createQuickPick()
                     selector.canSelectMany = true
-                    selector.placeholder = XString.Format("Select project(s) to {0}.", action)
+                    selector.placeholder = vscode.l10n.t(XString.Format("Select project(s) to {0}.", action))
                     selector.items = filterProjects().map(label => ({ label }))
                     selector.selectedItems = getLocalSelected(selector.items)
                     selector.onDidAccept(onDidAccept)

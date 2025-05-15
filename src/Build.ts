@@ -10,9 +10,8 @@ import { XFile, XLog, XString, XUtility } from "org.eframework.uni.util"
 import { Project } from "./Project"
 
 /**
- * Build 命名空间处理所有构建相关的操作。
+ * Build 模块处理所有构建相关的操作。
  * 提供项目的编译、资源复制等功能。
- * @namespace
  */
 export namespace Build {
     /**
@@ -23,12 +22,12 @@ export namespace Build {
      */
     export async function Process(projects: Project[], debug: boolean): Promise<void> {
         if (projects == null || projects.length == 0) {
-            XLog.Warn("Build.Process: no project(s) was selected.")
-            vscode.window.showInformationMessage("No project(s) was selected.")
+            XLog.Warn("Build.Process: no project was selected.")
+            vscode.window.showInformationMessage(vscode.l10n.t("No project was selected."))
         } else {
             return vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: "Building project(s)",
+                title: vscode.l10n.t("Building project(s)"),
                 cancellable: true
             }, (progress, token) => {
                 return new Promise<void>(async (resolve, reject) => {
@@ -36,7 +35,7 @@ export namespace Build {
                     token.onCancellationRequested(() => {
                         canceled = true
                         XLog.Info("Building project(s) has been canceled.")
-                        reject("Building project(s) has been canceled.")
+                        reject(vscode.l10n.t("Building project(s) has been canceled."))
                     })
 
                     let done = 0            // 已完成数量
@@ -66,10 +65,10 @@ export namespace Build {
                         if (done >= projects.length || canceled) {
                             let str = ""
                             if (failed.length == 0) {
-                                str = XString.Format("Build {0} project(s) succeed.", done)
+                                str = XString.Format(vscode.l10n.t("Build {0} project(s) succeed."), done)
                                 vscode.window.showInformationMessage(str)
                             } else {
-                                str = XString.Format("Build {0} project(s) succeed, failed({1}): {2}.", succeed, failed.length, failed.join(", "))
+                                str = XString.Format(vscode.l10n.t("Build {0} project(s) succeed, failed({1}): {2}."), succeed, failed.length, failed.join(", "))
                                 vscode.window.showErrorMessage(str)
                             }
                             setTimeout(resolve, 800) // 等待进度条显示完成
