@@ -88,6 +88,9 @@ const projects = new Array<Project>()
 /** 树形视图实例。 */
 var tree: vscode.TreeView<any>
 
+/** 树形视图事件。 */
+var treeEvent = new vscode.EventEmitter<void>()
+
 /** 选择视图实例。 */
 var selector: vscode.QuickPick<vscode.QuickPickItem>
 
@@ -305,7 +308,10 @@ export function activate(context: vscode.ExtensionContext) {
     parseConfig()
 
     // 监听配置
-    vscode.workspace.onDidChangeConfiguration(() => parseConfig())
+    vscode.workspace.onDidChangeConfiguration(() => {
+        parseConfig()
+        treeEvent.fire()
+    })
 
     // 注册命令
     for (let i = 0; i < commands.length; i++) {
@@ -341,7 +347,8 @@ export function activate(context: vscode.ExtensionContext) {
                         tooltip: JSON.stringify(element, null, "\t")
                     }
                 }
-            }
+            },
+            onDidChangeTreeData: treeEvent.event
         },
         canSelectMany: true
     })
