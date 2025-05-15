@@ -220,6 +220,6 @@
 		"vscode-languageclient": "^5.1.0",
 		"webpack": "5.84.1",
 		"webpack-cli": "5.1.1",
-		"org.eframework.uni.util": "0.0.2"
+		"org.eframework.uni.util": "0.0.3"
 	}
 }
