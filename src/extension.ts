@@ -336,15 +336,11 @@ export function activate(context: vscode.ExtensionContext) {
     tree = vscode.window.createTreeView("vsc-go.projectList", {
         treeDataProvider: {
             getChildren(element: string | Project): vscode.ProviderResult<any[]> {
-                const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration(XEnv.Identifier)
-                const list: any = config.get("projectList")
-                if (list) {
-                    if (!element) return Array.from(new Set(projects.map(e => e.Name)))
-                    else if (typeof (element) == "string") return projects.filter(e => e.Name == element)
-                    else if (element instanceof Project) return Object.keys(element)
-                }
+                if (!element) return Array.from(new Set(projects.map(e => e.Name)))
+                else if (typeof (element) == "string") return projects.filter(e => e.Name == element)
+                else if (element instanceof Project) return Object.entries(element)
             },
-            getTreeItem(element: string | Project): vscode.TreeItem {
+            getTreeItem(element: any): vscode.TreeItem {
                 if (typeof (element) == "string") {
                     let context = "notdebugging"
                     for (const [key] of sessions) {
@@ -355,7 +351,6 @@ export function activate(context: vscode.ExtensionContext) {
                         }
                     }
                     return {
-                        id: element,
                         label: element,
                         iconPath: new vscode.ThemeIcon("folder"),
                         collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
@@ -370,11 +365,15 @@ export function activate(context: vscode.ExtensionContext) {
                         }
                     }
                     return {
-                        id: element.ID,
                         label: element.ID.replace(element.Name + ".", ""),
-                        iconPath: new vscode.ThemeIcon("folder-opened"),
-                        tooltip: JSON.stringify(element, null, "\t"),
+                        iconPath: new vscode.ThemeIcon("symbol-method"),
+                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
                         contextValue: context
+                    }
+                } else if (element instanceof Array) {
+                    return {
+                        label: `${element[0]} = ${element[1]}`,
+                        collapsibleState: vscode.TreeItemCollapsibleState.None
                     }
                 }
             },
