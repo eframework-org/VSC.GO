@@ -229,10 +229,7 @@ async function selects(context: string | Project, action: string, ...matchs: str
                     for (let i = 0; i < selector.selectedItems.length; i++) {
                         const label = selector.selectedItems[i].label
                         const proj = projects.find(v => v.ID == label)
-                        if (proj) {
-                            selected.push(proj)
-                            break
-                        }
+                        if (proj) selected.push(proj)
                     }
                     saveLocal(selector.selectedItems)
                     selector.dispose()
