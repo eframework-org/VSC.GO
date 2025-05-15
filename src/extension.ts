@@ -362,9 +362,9 @@ export function activate(context: vscode.ExtensionContext) {
                         contextValue: context
                     }
                 } else if (element instanceof Project) {
-                    let context = "notdebugging"
+                    let context = element.Os == goPlat() ? "notdebugging" : ""
                     for (const [key] of sessions) {
-                        if (key == element.ID) {
+                        if (key == element.ID && element.Os == goPlat()) {
                             context = "debugging"
                             break
                         }
