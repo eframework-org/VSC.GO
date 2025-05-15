@@ -1,5 +1,5 @@
 {
-    "extension.description": "ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。",
+    "extension.description": "ECode for Go 优化了 Gopher 们的开发体验，提供快速构建与调试能力，兼容 Cursor、Trae 等 VSCode Like 编辑器。",
     "view.projects": "项目列表",
     "viewsWelcome.noProject": "未找到项目。",
     "command.buildProject": "构建项目",

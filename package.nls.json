@@ -1,5 +1,5 @@
 {
-    "extension.description": "ECode for Go optimizes the development workflow for Gophers, including fast build and debugging features.",
+    "extension.description": "ECode for Go streamlines the Gopher development workflow with fast build and debug support, and works with VSCode-like editors like Cursor and Trae.",
     "view.projects": "Projects",
     "viewsWelcome.noProject": "No project was found.",
     "command.buildProject": "Build Project(s)",

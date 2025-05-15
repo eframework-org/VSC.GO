@@ -8,7 +8,7 @@
 ![Installs](https://img.shields.io/open-vsx/dt/eframework-org/vsc-go)  
 [![DeepWiki](https://img.shields.io/badge/DeepWiki-Explore-blue)](https://deepwiki.com/eframework-org/VSC.GO)
 
-ECode for Go 优化了 Gopher 们的开发流程，包括快速构建及调试等。
+ECode for Go 优化了 Gopher 们的开发体验，提供快速构建与调试能力，兼容 Cursor、Trae 等 VSCode Like 编辑器。
 
 ## 功能特性
 
