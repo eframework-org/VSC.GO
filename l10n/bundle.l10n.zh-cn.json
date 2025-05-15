@@ -15,5 +15,6 @@
     "Select project(s) to build.": "选择要构建的项目。",
     "Building project(s)": "构建项目",
     "Building project(s) has been canceled.": "构建项目已取消。",
+    "Build {0} project(s) succeed.": "构建项目（{0}个）成功。",
     "Build {0} project(s) succeed, failed({1}): {2}.": "构建项目（{0}个）成功, 失败（{1}个）: {2}。"
 }
