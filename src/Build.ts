@@ -20,7 +20,7 @@ export namespace Build {
      * @param debug 是否为调试构建。
      * @returns Promise 在所有构建完成时解析。
      */
-    export async function Process(projects: Project[], debug: boolean): Promise<void> {
+    export async function Process(projects: Project[], debug: boolean): Promise<boolean> {
         if (projects == null || projects.length == 0) {
             XLog.Warn("Build.Process: no project was selected.")
             vscode.window.showInformationMessage(vscode.l10n.t("No project was selected."))
@@ -30,7 +30,7 @@ export namespace Build {
                 title: vscode.l10n.t("Building project(s)"),
                 cancellable: true
             }, (progress, token) => {
-                return new Promise<void>(async (resolve, reject) => {
+                return new Promise<boolean>(async (resolve, reject) => {
                     let canceled = false
                     token.onCancellationRequested(() => {
                         canceled = true
@@ -71,7 +71,7 @@ export namespace Build {
                                 str = XString.Format(vscode.l10n.t("Build {0} project(s) succeed, failed({1}): {2}."), succeed, failed.length, failed.join(", "))
                                 vscode.window.showErrorMessage(str)
                             }
-                            setTimeout(resolve, 800) // 等待进度条显示完成
+                            setTimeout(() => resolve(failed.length == 0), 800) // 等待进度条显示完成
                         } else {
                             index++
                             handleBuild()

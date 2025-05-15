@@ -57,8 +57,9 @@ const commands = [
         Handler: async (context: string | Project) => {
             const projects = await selects(context, "debug", "debug", goArch(), goPlat())
             await Stop.Process(projects)
-            await Build.Process(projects, true)
-            await Debug.Process(projects)
+            if (await Build.Process(projects, true)) {
+                await Debug.Process(projects)
+            }
         }
     },
     {
