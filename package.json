@@ -37,7 +37,7 @@
 		"onDebugResolve:go"
 	],
 	"main": "./dist/extension.js",
-	"l10n": "./l10n",
+	"l10n": "./res",
 	"scripts": {
 		"vscode:prepublish": "rm -rf dist && npm install && webpack --mode production",
 		"debug": "tsc",
