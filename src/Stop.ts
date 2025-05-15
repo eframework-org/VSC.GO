@@ -6,7 +6,7 @@ import * as vscode from "vscode"
 import * as path from "path"
 import * as killport from "kill-port"
 import { XFile, XLog, XString } from "org.eframework.uni.util"
-import { Project } from "./Define"
+import { Project } from "./Project"
 
 /**
  * Stop 命名空间处理所有终止相关的操作。

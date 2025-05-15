@@ -6,7 +6,7 @@ import * as vscode from "vscode"
 import * as path from "path"
 import * as child_process from "child_process"
 import { XLog, XString, XUtility } from "org.eframework.uni.util"
-import { Project } from "./Define"
+import { Project } from "./Project"
 import { XFile } from "org.eframework.uni.util"
 
 /**

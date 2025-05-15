@@ -13,7 +13,7 @@ import { Build } from "./Build"
 import { Debug } from "./Debug"
 import { Start } from "./Start"
 import { Stop } from "./Stop"
-import { Project } from "./Define"
+import { Project } from "./Project"
 
 /** 插件命令列表。 */
 const commands = [

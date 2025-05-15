@@ -7,7 +7,7 @@ import * as path from "path"
 import * as child_process from "child_process"
 import * as glob from "glob"
 import { XFile, XLog, XString, XUtility } from "org.eframework.uni.util"
-import { Project } from "./Define"
+import { Project } from "./Project"
 
 /**
  * Build 命名空间处理所有构建相关的操作。

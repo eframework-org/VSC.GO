@@ -6,7 +6,7 @@ import * as vscode from "vscode"
 import * as path from "path"
 import * as child_process from "child_process"
 import { XFile, XLog, XString } from "org.eframework.uni.util"
-import { Project } from "./Define"
+import { Project } from "./Project"
 
 /**
  * Debug 命名空间处理所有调试相关的操作。
