@@ -2,7 +2,7 @@
 	"name": "vsc-go",
 	"displayName": "ECode for Go",
 	"description": "%extension.description%",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"publisher": "eframework-org",
 	"author": {
