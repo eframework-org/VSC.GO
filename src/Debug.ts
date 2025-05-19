@@ -78,7 +78,7 @@ export namespace Debug {
                             // 启动调试会话
                             setTimeout(() => {
                                 vscode.debug.startDebugging(vscode.workspace.workspaceFolders[0], {
-                                    "name": project.ID,
+                                    "name": project.Name,
                                     "type": "go",
                                     "request": "launch",
                                     "mode": "exec",

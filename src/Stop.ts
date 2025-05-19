@@ -70,14 +70,14 @@ export namespace Stop {
                             try {
                                 if (!canceled) {
                                     // 尝试通过调试会话终止
-                                    const session = sessions.get(project.ID)
+                                    const session = sessions.get(project.Name)
                                     if (session) {
                                         vscode.debug.stopDebugging(session).then(() => {
                                             XLog.Error("Stop.Process({0}): finish kill proc by session.", project.ID)
-                                            sessions.delete(project.ID)
+                                            sessions.delete(project.Name)
                                         }, (e) => {
                                             XLog.Info("Stop.Process({0}): kill proc by session failed: {1}", project.ID, e)
-                                            sessions.delete(project.ID)
+                                            sessions.delete(project.Name)
                                         })
                                         XLog.Info("Stop.Process({0}): start kill proc by session.", project.ID)
                                     }

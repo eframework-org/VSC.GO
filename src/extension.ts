@@ -352,7 +352,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (typeof (element) == "string") {
                     let context = "notdebugging"
                     for (const [key] of sessions) {
-                        const proj = projects.find(v => v.ID == key)
+                        const proj = projects.find(v => v.Name == key)
                         if (proj && proj.Name == element) {
                             context = "debugging"
                             break
@@ -365,18 +365,10 @@ export function activate(context: vscode.ExtensionContext) {
                         contextValue: context
                     }
                 } else if (element instanceof Project) {
-                    let context = element.Os == goPlat() ? "notdebugging" : ""
-                    for (const [key] of sessions) {
-                        if (key == element.ID && element.Os == goPlat()) {
-                            context = "debugging"
-                            break
-                        }
-                    }
                     return {
                         label: element.ID.replace(element.Name + ".", ""),
                         iconPath: new vscode.ThemeIcon("symbol-method"),
-                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
-                        contextValue: context
+                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed
                     }
                 } else if (element instanceof Array) {
                     return {
