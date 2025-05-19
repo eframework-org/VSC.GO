@@ -35,7 +35,7 @@ export namespace Stop {
                     let canceled = false
                     token.onCancellationRequested(() => {
                         canceled = true
-                        XLog.Info("Stopping project(s) has been canceled.")
+                        XLog.Notice("Stop.Process: stopping project(s) has been canceled.")
                         reject(vscode.l10n.t("Stopping project(s) has been canceled."))
                     })
 

@@ -33,7 +33,7 @@ export namespace Start {
                     let canceled = false
                     token.onCancellationRequested(() => {
                         canceled = true
-                        XLog.Info("Starting project(s) has been canceled.")
+                        XLog.Notice("Start.Process: starting project(s) has been canceled.")
                         reject(vscode.l10n.t("Starting project(s) has been canceled."))
                     })
 

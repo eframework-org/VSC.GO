@@ -34,7 +34,7 @@ export namespace Build {
                     let canceled = false
                     token.onCancellationRequested(() => {
                         canceled = true
-                        XLog.Info("Building project(s) has been canceled.")
+                        XLog.Notice("Build.Process: building project(s) has been canceled.")
                         reject(vscode.l10n.t("Building project(s) has been canceled."))
                     })
 

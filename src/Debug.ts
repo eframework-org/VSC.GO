@@ -32,7 +32,7 @@ export namespace Debug {
                     let canceled = false
                     token.onCancellationRequested(() => {
                         canceled = true
-                        XLog.Info("Debugging project(s) has been canceled.")
+                        XLog.Notice("Debug.Process: debugging project(s) has been canceled.")
                         reject(vscode.l10n.t("Debugging project(s) has been canceled."))
                     })
 
@@ -62,7 +62,7 @@ export namespace Debug {
                         // 检查平台兼容性
                         const cplat = project.Os == "windows" ? "win32" : project.Os
                         if (cplat != process.platform) {
-                            XLog.Error("debug {0} program on {1} is not supported", cplat, process.platform)
+                            XLog.Error("Debug.Process: debug {0} program on {1} is not supported", cplat, process.platform)
                         } else if (XFile.HasFile(exefile) == false) {
                             XLog.Error("Debug.Process: {0} doesn't exist", exefile)
                         } else {
