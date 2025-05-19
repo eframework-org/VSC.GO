@@ -30,7 +30,7 @@ const commands = [
         ID: `${XEnv.Identifier}.debugProject`,
         /** 处理调试项目的命令。 */
         Handler: async (context: string | Project) => {
-            const projects = await selects(context, "debug", "debug", goArch(), goPlat())
+            const projects = await selects(context, "debug", "debug", goArch(), goOs())
             await Stop.Process(projects)
             if (await Build.Process(projects, true)) {
                 await Debug.Process(projects)
@@ -41,7 +41,7 @@ const commands = [
         ID: `${XEnv.Identifier}.stopProject`,
         /** 处理停止项目的命令。 */
         Handler: async (context: string | Project) => {
-            const projects = await selects(context, "stop", "debug", goArch(), goPlat())
+            const projects = await selects(context, "stop", "debug", goArch(), goOs())
             await Stop.Process(projects)
         }
     },
@@ -49,7 +49,7 @@ const commands = [
         ID: `${XEnv.Identifier}.startProject`,
         /** 处理启动项目的命令。 */
         Handler: async (context: string | Project) => {
-            const projects = await selects(context, "start", "release", goArch(), goPlat())
+            const projects = await selects(context, "start", "release", goArch(), goOs())
             await Stop.Process(projects)
             await Start.Process(projects)
         }
@@ -268,6 +268,12 @@ async function selects(context: string | Project, action: string, ...matchs: str
 }
 
 /**
+ * 获取当前 Go 环境的项目平台。
+ * @returns 返回项目平台字符串。
+ */
+function goOs(): string { return process.platform == "win32" ? "windows" : process.platform }
+
+/**
  * 获取当前 Go 环境的项目架构。
  * @returns 返回项目架构字符串。
  */
@@ -278,12 +284,6 @@ function goArch(): string {
     else if (process.arch == "ia32") { arch = "386" }
     return arch
 }
-
-/**
- * 获取当前 Go 环境的项目平台。
- * @returns 返回项目平台字符串。
- */
-function goPlat(): string { return process.platform == "win32" ? "windows" : process.platform }
 
 /**
  * 插件激活入口函数。
@@ -368,12 +368,14 @@ export function activate(context: vscode.ExtensionContext) {
                     return {
                         label: element.ID.replace(element.Name + ".", ""),
                         iconPath: new vscode.ThemeIcon("symbol-method"),
-                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed
+                        collapsibleState: vscode.TreeItemCollapsibleState.Collapsed,
+                        contextValue: "projectItem"
                     }
                 } else if (element instanceof Array) {
                     return {
                         label: `${element[0]} = ${element[1]}`,
-                        collapsibleState: vscode.TreeItemCollapsibleState.None
+                        collapsibleState: vscode.TreeItemCollapsibleState.None,
+                        contextValue: "projectConfigItem"
                     }
                 }
             },

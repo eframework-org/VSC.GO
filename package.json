@@ -83,22 +83,22 @@
 				{
 					"command": "vsc-go.debugProject",
 					"group": "order@1",
-					"when": "view == vsc-go.projectList"
+					"when": "view == vsc-go.projectList && viewItem != projectConfigItem"
 				},
 				{
 					"command": "vsc-go.stopProject",
 					"group": "order@2",
-					"when": "view == vsc-go.projectList"
+					"when": "view == vsc-go.projectList && viewItem != projectConfigItem"
 				},
 				{
 					"command": "vsc-go.startProject",
 					"group": "order@3",
-					"when": "view == vsc-go.projectList"
+					"when": "view == vsc-go.projectList && viewItem != projectConfigItem"
 				},
 				{
 					"command": "vsc-go.buildProject",
 					"group": "order@4",
-					"when": "view == vsc-go.projectList"
+					"when": "view == vsc-go.projectList && viewItem != projectConfigItem"
 				},
 				{
 					"command": "vsc-go.debugProject",
@@ -109,6 +109,16 @@
 					"command": "vsc-go.stopProject",
 					"group": "inline",
 					"when": "view == vsc-go.projectList && viewItem == debugging"
+				},
+				{
+					"command": "vsc-go.editProject",
+					"group": "order@1",
+					"when": "view == vsc-go.projectList && viewItem == projectConfigItem"
+				},
+				{
+					"command": "vsc-go.editProject",
+					"group": "inline",
+					"when": "view == vsc-go.projectList && viewItem == projectConfigItem"
 				}
 			]
 		},
