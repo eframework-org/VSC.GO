@@ -151,17 +151,18 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.com'
 
-      # - name: 更新版本号
-      #   run: |
-      #     VERSION="${{ needs.prepare.outputs.new_version }}"
-      #     CURRENT_VERSION=$(node -p "require('./package.json').version")
+      - name: 更新版本号
+        run: |
+          VERSION="${{ needs.prepare.outputs.new_version }}"
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
           
-      #     if [ "$VERSION" != "$CURRENT_VERSION" ]; then
-      #       echo "更新版本号: $CURRENT_VERSION -> $VERSION"
-      #       npm version $VERSION --no-git-tag-version
-      #     else
-      #       echo "版本号未变更，保持 $VERSION"
-      #     fi
+          # if [ "$VERSION" != "$CURRENT_VERSION" ]; then
+          #   echo "更新版本号: $CURRENT_VERSION -> $VERSION"
+          #   npm version $VERSION --no-git-tag-version
+          # else
+          #   echo "版本号未变更，保持 $VERSION"
+          # fi
+          npm version $VERSION --no-git-tag-version
 
       - name: 构建离线版本
         id: package
@@ -227,4 +228,5 @@ jobs:
         run: |
           echo "版本: v${{ needs.prepare.outputs.new_version }}"
           echo "标签: https://github.com/${{ github.repository }}/releases/tag/v${{ needs.prepare.outputs.new_version }}"
-          echo "注册表: https://marketplace.visualstudio.com/items?itemName=$(node -p "require('./package.json').publisher").$(node -p "require('./package.json').name")"
+          echo "注册表(VSC): https://marketplace.visualstudio.com/items?itemName=$(node -p "require('./package.json').publisher").$(node -p "require('./package.json').name")"
+          echo "注册表(VSX): https://open-vsx.org/extension/$(node -p "require('./package.json').publisher")/$(node -p "require('./package.json').name")"
