@@ -19,7 +19,7 @@
 		"url": "https://github.com/eframework-org/VSC.GO/issues"
 	},
 	"engines": {
-		"vscode": "^1.50.0"
+		"vscode": "^1.80.0"
 	},
 	"icon": "res/logo.png",
 	"categories": [
@@ -217,21 +217,13 @@
 	},
 	"devDependencies": {
 		"@types/glob": "7.2.0",
-		"@types/mocha": "^2.2.32",
 		"@types/node": "16.11.7",
-		"@types/socket.io": "^1.4.27",
-		"@types/socket.io-client": "^1.4.27",
-		"@types/vscode": "^1.50.0",
-		"@vscode/debugadapter": "^1.50.0",
-		"@vscode/debugprotocol": "^1.50.0",
+		"@types/vscode": "1.80.0",
 		"@vscode/vsce": "3.2.1",
 		"glob": "8.0.1",
 		"kill-port": "1.6.1",
-		"mocha": "^2.3.3",
-		"rd": "2.0.1",
-		"ts-loader": "^5.3.3",
+		"ts-loader": "5.4.5",
 		"typescript": "4.1.6",
-		"vscode-languageclient": "^5.1.0",
 		"webpack": "5.84.1",
 		"webpack-cli": "5.1.1",
 		"org.eframework.uni.util": "0.0.3"
